@@ -1,7 +1,9 @@
+import HeroVideo from "./components/HeroVideo";
+
 export default function Home() {
   return (
-    <main className="flex flex-1 items-center justify-center">
-      <h1 className="text-3xl font-semibold">Welding Tech Corp</h1>
+    <main className="flex-1">
+      <HeroVideo />
     </main>
   );
 }
