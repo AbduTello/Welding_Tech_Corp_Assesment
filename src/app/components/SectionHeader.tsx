@@ -16,7 +16,7 @@ export default function SectionHeader({
     <>
       <h2
         id={id}
-        className="max-w-2xl font-heading text-3xl font-medium sm:text-4xl"
+        className="max-w-2xl font-heading text-3xl font-medium text-balance sm:text-4xl"
       >
         {title}
       </h2>
