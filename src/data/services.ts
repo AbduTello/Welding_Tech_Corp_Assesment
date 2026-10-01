@@ -1,5 +1,7 @@
 import { RefreshCcw, Settings2, Wrench, type LucideIcon } from "lucide-react";
 
+import { WTC_UNIVERSITY_HREF } from "./navigation";
+
 export type Service = {
   title: string;
   description: string;
@@ -32,5 +34,5 @@ export const WTC_UNIVERSITY = {
   description:
     "Self-paced online training for maintenance technicians and resistance welding professionals.",
   cta: "Sign up for courses",
-  href: "https://moodle.weldtechcorp.com",
+  href: WTC_UNIVERSITY_HREF,
 };
