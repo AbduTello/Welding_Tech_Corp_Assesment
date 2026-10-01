@@ -6,21 +6,10 @@ import { ACCOUNT_LINKS } from "@/data/navigation";
 
 import NavDropdown from "./NavDropdown";
 
-type AccountMenuProps = {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  className?: string;
-};
-
-export default function AccountMenu(props: AccountMenuProps) {
+// Shared by the account dropdown and the phone menu
+export function AccountActions() {
   return (
-    <NavDropdown
-      {...props}
-      id="account-menu"
-      label="Account"
-      Icon={User}
-      panelClassName="p-5 sm:w-72"
-    >
+    <div>
       <p className="text-base font-semibold">Get More with a WTC Account</p>
       <div className="mt-4 flex flex-col gap-2">
         <a
@@ -36,6 +25,26 @@ export default function AccountMenu(props: AccountMenuProps) {
           Create account
         </a>
       </div>
+    </div>
+  );
+}
+
+type AccountMenuProps = {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  className?: string;
+};
+
+export default function AccountMenu(props: AccountMenuProps) {
+  return (
+    <NavDropdown
+      {...props}
+      id="account-menu"
+      label="Account"
+      Icon={User}
+      panelClassName="p-5 sm:w-72"
+    >
+      <AccountActions />
     </NavDropdown>
   );
 }

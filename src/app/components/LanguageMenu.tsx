@@ -1,22 +1,24 @@
 "use client";
 
 import { Check, Globe } from "lucide-react";
-import { useState } from "react";
 
-import { DEFAULT_LANGUAGE, LANGUAGES } from "@/data/languages";
+import { LANGUAGES } from "@/data/languages";
 
 import NavDropdown from "./NavDropdown";
 
 type LanguageMenuProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  selected: string;
+  onSelect: (code: string) => void;
   className?: string;
 };
 
-export default function LanguageMenu(props: LanguageMenuProps) {
-  // UI only for now; this becomes locale routing once translations exist
-  const [selected, setSelected] = useState(DEFAULT_LANGUAGE);
-
+export default function LanguageMenu({
+  selected,
+  onSelect,
+  ...props
+}: LanguageMenuProps) {
   return (
     <NavDropdown
       {...props}
@@ -32,7 +34,7 @@ export default function LanguageMenu(props: LanguageMenuProps) {
               type="button"
               aria-pressed={selected === code}
               onClick={() => {
-                setSelected(code);
+                onSelect(code);
                 props.onOpenChange(false);
               }}
               className="flex w-full cursor-pointer items-center justify-between rounded-lg px-3 py-2 text-left transition-colors hover:bg-black/5 focus-visible:bg-black/5 focus-visible:outline-none"

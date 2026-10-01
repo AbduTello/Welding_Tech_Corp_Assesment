@@ -1,14 +1,15 @@
 "use client";
 
-import { Menu, X } from "lucide-react";
+import { Globe, Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useSyncExternalStore } from "react";
 
+import { DEFAULT_LANGUAGE, LANGUAGES } from "@/data/languages";
 import { NAV_LINKS } from "@/data/navigation";
 
-import AccountMenu from "./AccountMenu";
+import AccountMenu, { AccountActions } from "./AccountMenu";
 import LanguageMenu from "./LanguageMenu";
 import NavSearch from "./NavSearch";
 
@@ -31,6 +32,8 @@ export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
   const [languageOpen, setLanguageOpen] = useState(false);
+  // UI only for now; this becomes locale routing once translations exist
+  const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
 
   // Transparent only over the home page hero, until the user interacts or scrolls
   const solid =
@@ -42,9 +45,6 @@ export default function Navbar() {
     searchOpen ||
     accountOpen ||
     languageOpen;
-
-  // Make room for the open search bar on phones
-  const hideOnPhoneWhileSearching = searchOpen ? "max-sm:hidden" : "";
 
   // While the mobile menu is open, close it on Esc or if the window widens to
   // the desktop layout (otherwise the bar would stay stuck in its solid style)
@@ -140,12 +140,15 @@ export default function Navbar() {
           <AccountMenu
             open={accountOpen}
             onOpenChange={setAccountOpen}
-            className={hideOnPhoneWhileSearching}
+            // On phones these live in the menu panel instead
+            className="max-sm:hidden"
           />
           <LanguageMenu
             open={languageOpen}
             onOpenChange={setLanguageOpen}
-            className={hideOnPhoneWhileSearching}
+            selected={language}
+            onSelect={setLanguage}
+            className="max-sm:hidden"
           />
 
           <button
@@ -172,20 +175,49 @@ export default function Navbar() {
           menuOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
         }`}
       >
-        <ul className="overflow-hidden">
-          {NAV_LINKS.map((link) => (
-            <li key={link.href} className="border-t border-black/10">
-              <Link
-                href={link.href}
-                aria-current={pathname === link.href ? "page" : undefined}
-                onClick={() => setMenuOpen(false)}
-                className="block px-4 py-4 text-base font-medium hover:bg-black/5 focus-visible:bg-black/5 focus-visible:outline-none aria-[current=page]:underline"
+        {/* Scrolls if the menu is taller than a short phone screen */}
+        <div className="max-h-[calc(100svh-4rem)] overflow-y-auto">
+          <ul>
+            {NAV_LINKS.map((link) => (
+              <li key={link.href} className="border-t border-black/10">
+                <Link
+                  href={link.href}
+                  aria-current={pathname === link.href ? "page" : undefined}
+                  onClick={() => setMenuOpen(false)}
+                  className="block px-4 py-4 text-base font-medium hover:bg-black/5 focus-visible:bg-black/5 focus-visible:outline-none aria-[current=page]:underline"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          {/* On phones, account and language move here from the bar */}
+          <div className="space-y-5 border-t border-black/10 px-4 py-5 sm:hidden">
+            <AccountActions />
+            <div>
+              <label
+                htmlFor="mobile-language"
+                className="flex items-center gap-2 text-sm font-semibold"
               >
-                {link.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+                <Globe className="size-4" strokeWidth={1.75} aria-hidden />
+                Language
+              </label>
+              <select
+                id="mobile-language"
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+                className="mt-2 w-full cursor-pointer rounded-lg bg-white px-3 py-2.5 text-sm ring-1 ring-black/20 focus-visible:outline-2 focus-visible:outline-black"
+              >
+                {LANGUAGES.map(({ code, nativeName }) => (
+                  <option key={code} value={code} lang={code}>
+                    {nativeName}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
       </div>
     </header>
   );
