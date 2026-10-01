@@ -2,8 +2,8 @@ import Image from "next/image";
 
 import { PRODUCT_CATEGORIES, type ProductCategory } from "@/data/products";
 
-import SectionHeader from "./SectionHeader";
-import { TEXT_LINK } from "./styles";
+import SectionHeader from "@/components/ui/SectionHeader";
+import { TEXT_LINK } from "@/components/ui/styles";
 import WeldSeam from "./WeldSeam";
 
 export default function ProductsBand() {

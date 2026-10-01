@@ -3,7 +3,7 @@ import { Phone } from "lucide-react";
 import { PHONE } from "@/data/company";
 import { PRODUCTS_HREF } from "@/data/navigation";
 
-import { BUTTON_PRIMARY, BUTTON_SECONDARY } from "./styles";
+import { BUTTON_PRIMARY, BUTTON_SECONDARY } from "@/components/ui/styles";
 
 export default function TaglineBand() {
   return (

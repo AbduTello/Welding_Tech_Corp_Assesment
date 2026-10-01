@@ -5,7 +5,7 @@ import { User } from "lucide-react";
 import { ACCOUNT_LINKS } from "@/data/navigation";
 
 import NavDropdown from "./NavDropdown";
-import { BUTTON, BUTTON_PRIMARY } from "./styles";
+import { BUTTON, BUTTON_PRIMARY } from "@/components/ui/styles";
 
 // Shared by the account dropdown and the phone menu
 export function AccountActions() {

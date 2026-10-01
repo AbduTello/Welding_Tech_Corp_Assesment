@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import { PHONE } from "@/data/company";
 
-import { BUTTON } from "./styles";
+import { BUTTON } from "@/components/ui/styles";
 
 export default function ConsultationBand() {
   return (

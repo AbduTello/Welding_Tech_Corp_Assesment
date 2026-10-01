@@ -2,12 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import styles from "./WeldSeam.module.css";
+
 const NUGGET_COUNT = 5;
 // Nuggets start once the seam line is partly drawn, then follow it down
 const FIRST_NUGGET_DELAY_MS = 300;
 const NUGGET_STAGGER_MS = 180;
 
-// Animation lifecycle, read by the .weld-seam rules in globals.css:
+// Animation lifecycle, read by the rules in WeldSeam.module.css:
 // - "static": server render, reduced motion, or no JS; the seam is shown finished
 // - "armed": hydrated and waiting offscreen; the seam is hidden
 // - "welding": in view; the seam draws and the nuggets flash, once
@@ -45,14 +47,14 @@ export default function WeldSeam() {
       ref={ref}
       aria-hidden
       data-weld={state}
-      className="weld-seam pointer-events-none absolute inset-y-0 left-0 z-10 hidden w-3.5 -translate-x-1/2 justify-center md:flex"
+      className={`${styles.seam} pointer-events-none absolute inset-y-0 left-0 z-10 hidden w-3.5 -translate-x-1/2 justify-center md:flex`}
     >
-      <span className="weld-seam-line w-1 bg-brand" />
+      <span className={`${styles.line} w-1 bg-brand`} />
       <span className="absolute inset-0 flex flex-col justify-evenly">
         {Array.from({ length: NUGGET_COUNT }, (_, i) => (
           <span
             key={i}
-            className="weld-nugget size-3.5 rounded-full"
+            className={`${styles.nugget} size-3.5 rounded-full`}
             style={{
               animationDelay: `${FIRST_NUGGET_DELAY_MS + i * NUGGET_STAGGER_MS}ms`,
             }}

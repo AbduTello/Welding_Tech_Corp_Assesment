@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Oswald, Roboto } from "next/font/google";
-import Footer from "./components/Footer";
-import Navbar from "./components/Navbar";
+import Footer from "@/components/layout/Footer";
+import Navbar from "@/components/layout/Navbar";
 import "./globals.css";
 
 // Oswald for headings, Roboto for body text (see globals.css)
@@ -27,7 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${oswald.variable} ${roboto.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans">
+      <body className="flex min-h-full flex-col font-sans">
         <Navbar />
         {children}
         <Footer />

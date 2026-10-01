@@ -111,7 +111,7 @@ export default function HeroVideo() {
           type="button"
           onClick={openModal}
           aria-label="Play video with sound"
-          className="absolute inset-0 h-full w-full cursor-pointer pointer-fine:cursor-none focus-visible:outline-4 focus-visible:-outline-offset-8 focus-visible:outline-white"
+          className="absolute inset-0 h-full w-full cursor-pointer focus-visible:outline-4 focus-visible:-outline-offset-8 focus-visible:outline-white pointer-fine:cursor-none"
         >
           {/* Touch devices have no hover, so show a static centered button */}
           <PlayBadge className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-fine:hidden" />

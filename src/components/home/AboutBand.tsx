@@ -3,8 +3,8 @@ import Image from "next/image";
 import { ABOUT_STATS, HQ_PHOTO } from "@/data/about";
 import { ABOUT_HREF } from "@/data/navigation";
 
-import SectionHeader from "./SectionHeader";
-import { TEXT_LINK } from "./styles";
+import SectionHeader from "@/components/ui/SectionHeader";
+import { TEXT_LINK } from "@/components/ui/styles";
 
 export default function AboutBand() {
   return (

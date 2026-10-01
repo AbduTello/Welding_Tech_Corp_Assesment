@@ -4,8 +4,8 @@ import { PHONE } from "@/data/company";
 import { SERVICE_HREF } from "@/data/navigation";
 import { SERVICES, WTC_UNIVERSITY } from "@/data/services";
 
-import SectionHeader from "./SectionHeader";
-import { BUTTON, BUTTON_PRIMARY, TEXT_LINK } from "./styles";
+import SectionHeader from "@/components/ui/SectionHeader";
+import { BUTTON, BUTTON_PRIMARY, TEXT_LINK } from "@/components/ui/styles";
 
 export default function ServiceBand() {
   return (
