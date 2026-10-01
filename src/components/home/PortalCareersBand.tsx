@@ -1,6 +1,6 @@
 import { ACCOUNT_LINKS, CAREERS_HREF } from "@/data/navigation";
 
-import { TEXT_LINK } from "./styles";
+import { TEXT_LINK } from "@/components/ui/styles";
 
 // Two panels from the old homepage slider. The portal is drawn as a file
 // folder and careers as a door that swings open on hover or keyboard focus.

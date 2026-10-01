@@ -58,7 +58,7 @@ export default function NavSearch({ open, onOpenChange }: NavSearchProps) {
         onKeyDown={(e) => {
           if (e.key === "Escape") close();
         }}
-        className={`min-w-0 flex-1 bg-transparent pr-4 text-sm outline-none placeholder:text-current/60 transition-opacity duration-300 ${
+        className={`min-w-0 flex-1 bg-transparent pr-4 text-sm transition-opacity duration-300 outline-none placeholder:text-current/60 ${
           open ? "opacity-100" : "opacity-0"
         }`}
       />
