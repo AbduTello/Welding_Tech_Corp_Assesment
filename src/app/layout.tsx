@@ -15,8 +15,9 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Welding Tech Corp Rebuild",
-  description: "Welding Tech Corp homepage rebuild",
+  title: "Welding Technology Corp | Resistance Welding Controls",
+  description:
+    "Welding Technology Corp designs, manufactures, and services resistance welding controls, trusted worldwide since 1936.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

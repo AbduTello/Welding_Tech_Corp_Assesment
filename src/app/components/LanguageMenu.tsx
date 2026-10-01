@@ -14,6 +14,8 @@ type LanguageMenuProps = {
   className?: string;
 };
 
+// TODO: selecting a language only updates the UI; wire it to locale routing
+// once translations exist
 export default function LanguageMenu({
   selected,
   onSelect,
@@ -63,5 +65,3 @@ export default function LanguageMenu({
     </NavDropdown>
   );
 }
-
-// TODO: implement the actual functionality for language selection
