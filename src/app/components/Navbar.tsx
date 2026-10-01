@@ -1,11 +1,17 @@
 "use client";
 
+import { Globe, Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useSyncExternalStore } from "react";
 
+import { DEFAULT_LANGUAGE, LANGUAGES } from "@/data/languages";
 import { NAV_LINKS } from "@/data/navigation";
+
+import AccountMenu, { AccountActions } from "./AccountMenu";
+import LanguageMenu from "./LanguageMenu";
+import NavSearch from "./NavSearch";
 
 function subscribeToScroll(callback: () => void) {
   window.addEventListener("scroll", callback, { passive: true });
@@ -23,17 +29,48 @@ export default function Navbar() {
   const [hovered, setHovered] = useState(false);
   const [focusWithin, setFocusWithin] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
+  const [languageOpen, setLanguageOpen] = useState(false);
+  // UI only for now; this becomes locale routing once translations exist
+  const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
 
   // Transparent only over the home page hero, until the user interacts or scrolls
-  const solid = !isHome || scrolled || hovered || focusWithin || menuOpen;
+  const solid =
+    !isHome ||
+    scrolled ||
+    hovered ||
+    focusWithin ||
+    menuOpen ||
+    searchOpen ||
+    accountOpen ||
+    languageOpen;
 
+  // A dropdown and the menu panel would stack under the bar, so opening a
+  // dropdown closes the menu. (Clicking the menu button already closes any
+  // open dropdown, since it counts as a click outside it.)
+  function dropdownHandler(setOpen: (open: boolean) => void) {
+    return (open: boolean) => {
+      setOpen(open);
+      if (open) setMenuOpen(false);
+    };
+  }
+
+  // While the mobile menu is open, close it on Esc or if the window widens to
+  // the desktop layout (otherwise the bar would stay stuck in its solid style)
   useEffect(() => {
     if (!menuOpen) return;
-    function onKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") setMenuOpen(false);
-    }
+    const close = () => setMenuOpen(false);
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+    };
+    const desktop = window.matchMedia("(min-width: 80rem)"); // Tailwind `xl`
     window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    desktop.addEventListener("change", close);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      desktop.removeEventListener("change", close);
+    };
   }, [menuOpen]);
 
   return (
@@ -66,7 +103,7 @@ export default function Navbar() {
         <div className="flex items-center gap-10">
           <Link
             href="/"
-            aria-label="Welding Tech Corp home"
+            aria-label="Welding Technology Corp home"
             onClick={() => setMenuOpen(false)}
             className="relative block aspect-[400/103] h-8 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current lg:h-10"
           >
@@ -83,7 +120,7 @@ export default function Navbar() {
             />
             <Image
               src="/wtc-logo-black.png"
-              alt="Welding Technology Corp"
+              alt=""
               width={400}
               height={103}
               preload
@@ -93,7 +130,7 @@ export default function Navbar() {
             />
           </Link>
 
-          <ul className="hidden gap-6 text-sm font-medium lg:flex">
+          <ul className="hidden gap-6 text-sm font-medium xl:flex">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
                 <Link
@@ -108,8 +145,21 @@ export default function Navbar() {
           </ul>
         </div>
 
-        <div className="flex items-center gap-4">
-          {/* Next iteration: login, search, language */}
+        <div className="flex items-center gap-1">
+          <NavSearch open={searchOpen} onOpenChange={setSearchOpen} />
+          <AccountMenu
+            open={accountOpen}
+            onOpenChange={dropdownHandler(setAccountOpen)}
+            // On phones these live in the menu panel instead
+            className="max-sm:hidden"
+          />
+          <LanguageMenu
+            open={languageOpen}
+            onOpenChange={dropdownHandler(setLanguageOpen)}
+            selected={language}
+            onSelect={setLanguage}
+            className="max-sm:hidden"
+          />
 
           <button
             type="button"
@@ -117,23 +167,13 @@ export default function Navbar() {
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
-            className="-mr-2 flex size-10 cursor-pointer items-center justify-center rounded-md focus-visible:outline-2 focus-visible:outline-current lg:hidden"
+            className="-mr-2 flex size-10 cursor-pointer items-center justify-center rounded-md focus-visible:outline-2 focus-visible:outline-current xl:hidden"
           >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              strokeLinecap="round"
-              aria-hidden
-              className="size-6"
-            >
-              {menuOpen ? (
-                <path d="M6 6l12 12M18 6 6 18" />
-              ) : (
-                <path d="M4 7h16M4 12h16M4 17h16" />
-              )}
-            </svg>
+            {menuOpen ? (
+              <X className="size-6" aria-hidden />
+            ) : (
+              <Menu className="size-6" aria-hidden />
+            )}
           </button>
         </div>
       </nav>
@@ -141,24 +181,53 @@ export default function Navbar() {
       <div
         id="mobile-menu"
         inert={!menuOpen}
-        className={`grid bg-white transition-[grid-template-rows,opacity] duration-300 lg:hidden ${
+        className={`grid bg-white transition-[grid-template-rows,opacity] duration-300 xl:hidden ${
           menuOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
         }`}
       >
-        <ul className="overflow-hidden">
-          {NAV_LINKS.map((link) => (
-            <li key={link.href} className="border-t border-black/10">
-              <Link
-                href={link.href}
-                aria-current={pathname === link.href ? "page" : undefined}
-                onClick={() => setMenuOpen(false)}
-                className="block px-4 py-4 text-base font-medium hover:bg-black/5 focus-visible:bg-black/5 focus-visible:outline-none aria-[current=page]:underline"
+        {/* Scrolls if the menu is taller than a short phone screen */}
+        <div className="max-h-[calc(100svh-4rem)] overflow-y-auto">
+          <ul>
+            {NAV_LINKS.map((link) => (
+              <li key={link.href} className="border-t border-black/10">
+                <Link
+                  href={link.href}
+                  aria-current={pathname === link.href ? "page" : undefined}
+                  onClick={() => setMenuOpen(false)}
+                  className="block px-4 py-4 text-base font-medium hover:bg-black/5 focus-visible:bg-black/5 focus-visible:outline-none aria-[current=page]:underline"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          {/* On phones, account and language move here from the bar */}
+          <div className="space-y-5 border-t border-black/10 px-4 py-5 sm:hidden">
+            <AccountActions />
+            <div>
+              <label
+                htmlFor="mobile-language"
+                className="flex items-center gap-2 text-sm font-semibold"
               >
-                {link.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+                <Globe className="size-4" strokeWidth={1.75} aria-hidden />
+                Language
+              </label>
+              <select
+                id="mobile-language"
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+                className="mt-2 w-full cursor-pointer rounded-lg bg-white px-3 py-2.5 text-sm ring-1 ring-black/20 focus-visible:outline-2 focus-visible:outline-black"
+              >
+                {LANGUAGES.map(({ code, nativeName }) => (
+                  <option key={code} value={code} lang={code}>
+                    {nativeName}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
       </div>
     </header>
   );
