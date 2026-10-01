@@ -3,8 +3,7 @@ import { Phone } from "lucide-react";
 import { PHONE } from "@/data/company";
 import { PRODUCTS_HREF } from "@/data/navigation";
 
-const BUTTON =
-  "inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy";
+import { BUTTON_PRIMARY, BUTTON_SECONDARY } from "./styles";
 
 export default function TaglineBand() {
   return (
@@ -15,16 +14,10 @@ export default function TaglineBand() {
       <p className="mt-3 text-base text-navy/70 sm:text-lg">Since 1936</p>
 
       <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-        <a
-          href={PRODUCTS_HREF}
-          className={`${BUTTON} bg-brand text-white hover:bg-brand/90`}
-        >
+        <a href={PRODUCTS_HREF} className={BUTTON_PRIMARY}>
           Explore products
         </a>
-        <a
-          href={PHONE.href}
-          className={`${BUTTON} ring-1 ring-navy/40 hover:bg-navy/5`}
-        >
+        <a href={PHONE.href} className={BUTTON_SECONDARY}>
           <Phone className="size-4" strokeWidth={1.75} aria-hidden />
           Call {PHONE.display}
         </a>

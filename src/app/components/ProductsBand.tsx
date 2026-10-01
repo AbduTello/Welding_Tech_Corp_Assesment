@@ -2,10 +2,9 @@ import Image from "next/image";
 
 import { PRODUCT_CATEGORIES, type ProductCategory } from "@/data/products";
 
+import SectionHeader from "./SectionHeader";
+import { TEXT_LINK } from "./styles";
 import WeldSeam from "./WeldSeam";
-
-const LINK =
-  "mt-6 inline-block font-medium underline decoration-brand decoration-2 underline-offset-[6px] transition-colors hover:text-brand focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white motion-reduce:transition-none";
 
 export default function ProductsBand() {
   return (
@@ -14,16 +13,11 @@ export default function ProductsBand() {
       className="bg-ink px-4 py-16 text-white sm:py-24"
     >
       <div className="mx-auto max-w-6xl">
-        <h2
+        <SectionHeader
           id="products-heading"
-          className="max-w-2xl font-heading text-3xl font-medium sm:text-4xl"
-        >
-          Controls and software for every resistance welding application
-        </h2>
-        <p className="mt-4 max-w-2xl leading-relaxed text-pretty text-white/75 sm:text-lg">
-          WTC weld controls run WTC welding software. One system, joined at the
-          weld.
-        </p>
+          title="Controls and software for every resistance welding application"
+          intro="Weld control hardware and welding software, both from WTC. One system, joined at the weld."
+        />
 
         {/* No column gap from md up, so the two banners meet as one strip */}
         <ul className="mt-10 grid gap-12 sm:mt-14 md:grid-cols-2 md:gap-0">
@@ -73,7 +67,7 @@ function CategoryItem({
         </h3>
         <p className="mt-3 leading-relaxed text-white/75">{description}</p>
 
-        <a href={href} className={LINK}>
+        <a href={href} className={`mt-6 ${TEXT_LINK}`}>
           {cta}
         </a>
       </div>
