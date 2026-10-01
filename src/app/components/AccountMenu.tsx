@@ -10,7 +10,9 @@ import NavDropdown from "./NavDropdown";
 export function AccountActions() {
   return (
     <div>
-      <p className="text-base font-semibold">Get More with a WTC Account</p>
+      <p className="font-heading text-lg font-medium">
+        Get More with a WTC Account
+      </p>
       <div className="mt-4 flex flex-col gap-2">
         <a
           href={ACCOUNT_LINKS.signIn}
