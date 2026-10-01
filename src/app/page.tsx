@@ -1,5 +1,6 @@
 import CertificationsBand from "./components/CertificationsBand";
 import HeroVideo from "./components/HeroVideo";
+import ProductsBand from "./components/ProductsBand";
 import TaglineBand from "./components/TaglineBand";
 
 export default function Home() {
@@ -8,6 +9,7 @@ export default function Home() {
       <HeroVideo />
       <TaglineBand />
       <CertificationsBand />
+      <ProductsBand />
     </main>
   );
 }
