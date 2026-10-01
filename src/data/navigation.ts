@@ -6,14 +6,13 @@ export type NavLink = {
 export const PRODUCTS_HREF =
   "https://www.weldtechcorp.com/products-solutions.html";
 
+export const SERVICE_HREF = "https://www.weldtechcorp.com/service-repairs.html";
+
 // The old link tree also had "Human Resources" and "Website Terms of Use" —
 // those are probably better off in the footer.
 export const NAV_LINKS: NavLink[] = [
   { label: "Products and Solutions", href: PRODUCTS_HREF },
-  {
-    label: "Service and Support",
-    href: "https://www.weldtechcorp.com/service-repairs.html",
-  },
+  { label: "Service and Support", href: SERVICE_HREF },
   {
     label: "Learning Center",
     href: "https://www.weldtechcorp.com/learning-center.html",
