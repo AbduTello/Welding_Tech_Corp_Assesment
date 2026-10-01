@@ -27,8 +27,7 @@ export default function ConsultationBand() {
           id="consultation-heading"
           className="font-heading text-3xl font-medium text-balance sm:text-4xl"
         >
-          Phone
-Consultation
+          Phone Consultation
         </h2>
         {/* Focus outline is white here; the shared navy one would vanish on the dark band */}
         <a
