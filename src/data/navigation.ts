@@ -8,6 +8,8 @@ export const PRODUCTS_HREF =
 
 export const SERVICE_HREF = "https://www.weldtechcorp.com/service-repairs.html";
 
+export const ABOUT_HREF = "https://www.weldtechcorp.com/about.html";
+
 // The old link tree also had "Human Resources" and "Website Terms of Use" —
 // those are probably better off in the footer.
 export const NAV_LINKS: NavLink[] = [
@@ -17,7 +19,7 @@ export const NAV_LINKS: NavLink[] = [
     label: "Learning Center",
     href: "https://www.weldtechcorp.com/learning-center.html",
   },
-  { label: "About", href: "https://www.weldtechcorp.com/about.html" },
+  { label: "About", href: ABOUT_HREF },
   { label: "News", href: "https://www.weldtechcorp.com/news/index.html" },
   { label: "Contact", href: "https://www.weldtechcorp.com/contact.html" },
 ];
