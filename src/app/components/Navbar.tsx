@@ -46,6 +46,16 @@ export default function Navbar() {
     accountOpen ||
     languageOpen;
 
+  // A dropdown and the menu panel would stack under the bar, so opening a
+  // dropdown closes the menu. (Clicking the menu button already closes any
+  // open dropdown, since it counts as a click outside it.)
+  function dropdownHandler(setOpen: (open: boolean) => void) {
+    return (open: boolean) => {
+      setOpen(open);
+      if (open) setMenuOpen(false);
+    };
+  }
+
   // While the mobile menu is open, close it on Esc or if the window widens to
   // the desktop layout (otherwise the bar would stay stuck in its solid style)
   useEffect(() => {
@@ -139,13 +149,13 @@ export default function Navbar() {
           <NavSearch open={searchOpen} onOpenChange={setSearchOpen} />
           <AccountMenu
             open={accountOpen}
-            onOpenChange={setAccountOpen}
+            onOpenChange={dropdownHandler(setAccountOpen)}
             // On phones these live in the menu panel instead
             className="max-sm:hidden"
           />
           <LanguageMenu
             open={languageOpen}
-            onOpenChange={setLanguageOpen}
+            onOpenChange={dropdownHandler(setLanguageOpen)}
             selected={language}
             onSelect={setLanguage}
             className="max-sm:hidden"
