@@ -7,6 +7,8 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 
 import { NAV_LINKS } from "@/data/navigation";
 
+import { CloseIcon, MenuIcon } from "./icons";
+
 function subscribeToScroll(callback: () => void) {
   window.addEventListener("scroll", callback, { passive: true });
   return () => window.removeEventListener("scroll", callback);
@@ -27,13 +29,21 @@ export default function Navbar() {
   // Transparent only over the home page hero, until the user interacts or scrolls
   const solid = !isHome || scrolled || hovered || focusWithin || menuOpen;
 
+  // While the mobile menu is open, close it on Esc or if the window widens to
+  // the desktop layout (otherwise the bar would stay stuck in its solid style)
   useEffect(() => {
     if (!menuOpen) return;
-    function onKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") setMenuOpen(false);
-    }
+    const close = () => setMenuOpen(false);
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+    };
+    const desktop = window.matchMedia("(min-width: 64rem)"); // Tailwind `lg`
     window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    desktop.addEventListener("change", close);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      desktop.removeEventListener("change", close);
+    };
   }, [menuOpen]);
 
   return (
@@ -119,21 +129,11 @@ export default function Navbar() {
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             className="-mr-2 flex size-10 cursor-pointer items-center justify-center rounded-md focus-visible:outline-2 focus-visible:outline-current lg:hidden"
           >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              strokeLinecap="round"
-              aria-hidden
-              className="size-6"
-            >
-              {menuOpen ? (
-                <path d="M6 6l12 12M18 6 6 18" />
-              ) : (
-                <path d="M4 7h16M4 12h16M4 17h16" />
-              )}
-            </svg>
+            {menuOpen ? (
+              <CloseIcon className="size-6" />
+            ) : (
+              <MenuIcon className="size-6" />
+            )}
           </button>
         </div>
       </nav>

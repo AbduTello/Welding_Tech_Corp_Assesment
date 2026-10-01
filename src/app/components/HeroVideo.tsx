@@ -2,21 +2,25 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { ArrowDownIcon, CloseIcon, PlayIcon } from "./icons";
+
 // Silent 720p loop for the background; full 1080p with audio only in the modal
 const BACKGROUND_SRC = "/hero-bg.mp4";
 const MODAL_SRC = "/hero-full.mp4";
 const POSTER_SRC = "/hero-poster.jpg";
 
-function PlayIcon({ className }: { className?: string }) {
+function prefersReducedMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function PlayBadge({ className = "" }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden
-      className={className}
+    <span
+      className={`flex size-20 items-center justify-center rounded-full bg-white/20 text-white ring-1 ring-white/40 backdrop-blur-md ${className}`}
     >
-      <path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l11.1-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14Z" />
-    </svg>
+      {/* Nudged right so the triangle looks optically centered */}
+      <PlayIcon className="ml-1 size-8" />
+    </span>
   );
 }
 
@@ -30,11 +34,10 @@ export default function HeroVideo() {
   const [pressed, setPressed] = useState(false);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      backgroundRef.current?.pause();
-    }
+    if (prefersReducedMotion()) backgroundRef.current?.pause();
   }, []);
 
+  // Positions the custom play cursor directly (no re-render per mouse move)
   function moveCursor(e: React.PointerEvent) {
     const section = sectionRef.current;
     const cursor = cursorRef.current;
@@ -48,15 +51,14 @@ export default function HeroVideo() {
   function scrollPastHero() {
     const section = sectionRef.current;
     if (!section) return;
-    const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
     window.scrollTo({
       top: section.getBoundingClientRect().bottom + window.scrollY,
-      behavior: reduceMotion ? "auto" : "smooth",
+      behavior: prefersReducedMotion() ? "auto" : "smooth",
     });
   }
 
+  // play() rejects if the browser blocks or interrupts playback; that's not
+  // an error worth surfacing, so those rejections are ignored below.
   function openModal() {
     backgroundRef.current?.pause();
     document.body.style.overflow = "hidden";
@@ -64,16 +66,15 @@ export default function HeroVideo() {
     modalVideoRef.current?.play().catch(() => {});
   }
 
-  function handleClose() {
+  // Runs for every way the dialog closes: Esc, the ✕ button, or a backdrop click
+  function handleModalClose() {
     const modalVideo = modalVideoRef.current;
     if (modalVideo) {
       modalVideo.pause();
       modalVideo.currentTime = 0;
     }
     document.body.style.overflow = "";
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      backgroundRef.current?.play().catch(() => {});
-    }
+    if (!prefersReducedMotion()) backgroundRef.current?.play().catch(() => {});
   }
 
   return (
@@ -112,9 +113,7 @@ export default function HeroVideo() {
           className="absolute inset-0 h-full w-full cursor-pointer pointer-fine:cursor-none focus-visible:outline-4 focus-visible:-outline-offset-8 focus-visible:outline-white"
         >
           {/* Touch devices have no hover, so show a static centered button */}
-          <span className="absolute top-1/2 left-1/2 flex size-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white ring-1 ring-white/40 backdrop-blur-md pointer-fine:hidden">
-            <PlayIcon className="ml-1 size-8" />
-          </span>
+          <PlayBadge className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-fine:hidden" />
         </button>
 
         {/* Play badge that follows the mouse on fine-pointer devices */}
@@ -123,13 +122,11 @@ export default function HeroVideo() {
           aria-hidden
           className="pointer-events-none absolute top-0 left-0 hidden will-change-transform pointer-fine:block"
         >
-          <div
-            className={`flex size-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white ring-1 ring-white/40 backdrop-blur-md transition-[opacity,scale] duration-200 ${
+          <PlayBadge
+            className={`-translate-x-1/2 -translate-y-1/2 transition-[opacity,scale] duration-200 ${
               hovering ? "opacity-100" : "opacity-0"
             } ${pressed ? "scale-90" : hovering ? "scale-100" : "scale-50"}`}
-          >
-            <PlayIcon className="ml-1 size-8" />
-          </div>
+          />
         </div>
 
         <button
@@ -139,24 +136,14 @@ export default function HeroVideo() {
           data-no-play-cursor
           className="absolute right-4 bottom-4 flex size-11 cursor-pointer items-center justify-center rounded-full text-white ring-1 ring-white/50 transition-colors hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:right-8 sm:bottom-8 sm:size-12"
         >
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden
-            className="size-5"
-          >
-            <path d="M12 5v14M6 13l6 6 6-6" />
-          </svg>
+          <ArrowDownIcon className="size-5" />
         </button>
       </section>
 
       <dialog
         ref={dialogRef}
-        onClose={handleClose}
+        onClose={handleModalClose}
+        // A click directly on the <dialog> (not its children) is a backdrop click
         onClick={(e) => {
           if (e.target === dialogRef.current) dialogRef.current.close();
         }}
@@ -179,17 +166,7 @@ export default function HeroVideo() {
             aria-label="Close video"
             className="absolute -top-12 right-0 flex size-10 cursor-pointer items-center justify-center rounded-full bg-white/15 text-white transition hover:bg-white/30 focus-visible:outline-2 focus-visible:outline-white"
           >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              strokeLinecap="round"
-              aria-hidden
-              className="size-5"
-            >
-              <path d="M6 6l12 12M18 6 6 18" />
-            </svg>
+            <CloseIcon className="size-5" />
           </button>
         </div>
       </dialog>
