@@ -1,3 +1,4 @@
+import CertificationsBand from "./components/CertificationsBand";
 import HeroVideo from "./components/HeroVideo";
 import TaglineBand from "./components/TaglineBand";
 
@@ -6,6 +7,7 @@ export default function Home() {
     <main className="flex-1">
       <HeroVideo />
       <TaglineBand />
+      <CertificationsBand />
     </main>
   );
 }
