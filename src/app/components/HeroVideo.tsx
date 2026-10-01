@@ -50,8 +50,10 @@ export default function HeroVideo() {
   function scrollPastHero() {
     const section = sectionRef.current;
     if (!section) return;
+    // Stop short by the fixed navbar's height so it doesn't cover the next section
+    const navHeight = document.querySelector("header")?.offsetHeight ?? 0;
     window.scrollTo({
-      top: section.getBoundingClientRect().bottom + window.scrollY,
+      top: section.getBoundingClientRect().bottom + window.scrollY - navHeight,
       behavior: prefersReducedMotion() ? "auto" : "smooth",
     });
   }
