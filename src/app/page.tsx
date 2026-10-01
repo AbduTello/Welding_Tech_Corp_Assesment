@@ -1,5 +1,6 @@
 import AboutBand from "./components/AboutBand";
 import CertificationsBand from "./components/CertificationsBand";
+import ConsultationBand from "./components/ConsultationBand";
 import HeroVideo from "./components/HeroVideo";
 import ProductsBand from "./components/ProductsBand";
 import ServiceBand from "./components/ServiceBand";
@@ -14,6 +15,7 @@ export default function Home() {
       <ProductsBand />
       <ServiceBand />
       <AboutBand />
+      <ConsultationBand />
     </main>
   );
 }
