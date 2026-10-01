@@ -4,8 +4,8 @@ import { PHONE } from "@/data/company";
 import { SERVICE_HREF } from "@/data/navigation";
 import { SERVICES, WTC_UNIVERSITY } from "@/data/services";
 
-const FOCUS =
-  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy";
+import SectionHeader from "./SectionHeader";
+import { BUTTON, BUTTON_PRIMARY, TEXT_LINK } from "./styles";
 
 export default function ServiceBand() {
   return (
@@ -14,16 +14,11 @@ export default function ServiceBand() {
       className="bg-white px-4 py-16 text-navy sm:py-24"
     >
       <div className="mx-auto max-w-6xl">
-        <h2
+        <SectionHeader
           id="service-heading"
-          className="max-w-2xl font-heading text-3xl font-medium sm:text-4xl"
-        >
-          Service and support that comes to you
-        </h2>
-        <p className="mt-4 max-w-2xl leading-relaxed text-pretty text-navy/70 sm:text-lg">
-          WTC&apos;s Technical Support Team (TST) travels the globe to help you,
-          from start-up support to troubleshooting and emergency breakdowns.
-        </p>
+          title="Service and support that comes to you"
+          intro="WTC's Technical Support Team (TST) travels the globe to help you, from start-up support to troubleshooting and emergency breakdowns."
+        />
 
         {/* Services sit three across from md up; at lg the University panel joins them as a fourth column */}
         <div className="mt-10 grid gap-8 sm:mt-14 lg:grid-cols-4 lg:gap-0">
@@ -58,7 +53,7 @@ export default function ServiceBand() {
             </p>
             <a
               href={WTC_UNIVERSITY.href}
-              className="mt-5 rounded-lg bg-white px-4 py-2 text-sm font-medium text-navy transition-colors hover:bg-white/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              className={`mt-5 ${BUTTON} bg-white text-navy hover:bg-white/90 focus-visible:outline-white`}
             >
               {WTC_UNIVERSITY.cta}
             </a>
@@ -66,17 +61,11 @@ export default function ServiceBand() {
         </div>
 
         <div className="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
-          <a
-            href={PHONE.href}
-            className={`inline-flex items-center justify-center gap-2 rounded-lg bg-brand px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-brand/90 ${FOCUS}`}
-          >
+          <a href={PHONE.href} className={BUTTON_PRIMARY}>
             <Phone className="size-4" strokeWidth={1.75} aria-hidden />
             Call TST at {PHONE.display}
           </a>
-          <a
-            href={SERVICE_HREF}
-            className={`font-medium underline decoration-brand decoration-2 underline-offset-[6px] transition-colors hover:text-brand ${FOCUS}`}
-          >
+          <a href={SERVICE_HREF} className={TEXT_LINK}>
             See service and support
           </a>
         </div>

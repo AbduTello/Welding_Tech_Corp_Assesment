@@ -130,16 +130,16 @@ export default function Navbar() {
             />
           </Link>
 
+          {/* Nav links go to pages on weldtechcorp.com, so they are plain <a>, not next/link */}
           <ul className="hidden gap-6 text-sm font-medium xl:flex">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
-                <Link
+                <a
                   href={link.href}
-                  aria-current={pathname === link.href ? "page" : undefined}
-                  className="relative py-1 whitespace-nowrap after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current aria-[current=page]:after:scale-x-100"
+                  className="relative py-1 whitespace-nowrap after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current"
                 >
                   {link.label}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
@@ -190,14 +190,13 @@ export default function Navbar() {
           <ul>
             {NAV_LINKS.map((link) => (
               <li key={link.href} className="border-t border-black/10">
-                <Link
+                <a
                   href={link.href}
-                  aria-current={pathname === link.href ? "page" : undefined}
                   onClick={() => setMenuOpen(false)}
-                  className="block px-4 py-4 text-base font-medium hover:bg-black/5 focus-visible:bg-black/5 focus-visible:outline-none aria-[current=page]:underline"
+                  className="block px-4 py-4 text-base font-medium hover:bg-black/5 focus-visible:bg-black/5 focus-visible:outline-none"
                 >
                   {link.label}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
