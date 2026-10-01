@@ -1,5 +1,6 @@
 "use client";
 
+import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -7,7 +8,9 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 
 import { NAV_LINKS } from "@/data/navigation";
 
-import { CloseIcon, MenuIcon } from "./icons";
+import AccountMenu from "./AccountMenu";
+import LanguageMenu from "./LanguageMenu";
+import NavSearch from "./NavSearch";
 
 function subscribeToScroll(callback: () => void) {
   window.addEventListener("scroll", callback, { passive: true });
@@ -25,9 +28,23 @@ export default function Navbar() {
   const [hovered, setHovered] = useState(false);
   const [focusWithin, setFocusWithin] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
+  const [languageOpen, setLanguageOpen] = useState(false);
 
   // Transparent only over the home page hero, until the user interacts or scrolls
-  const solid = !isHome || scrolled || hovered || focusWithin || menuOpen;
+  const solid =
+    !isHome ||
+    scrolled ||
+    hovered ||
+    focusWithin ||
+    menuOpen ||
+    searchOpen ||
+    accountOpen ||
+    languageOpen;
+
+  // Make room for the open search bar on phones
+  const hideOnPhoneWhileSearching = searchOpen ? "max-sm:hidden" : "";
 
   // While the mobile menu is open, close it on Esc or if the window widens to
   // the desktop layout (otherwise the bar would stay stuck in its solid style)
@@ -37,7 +54,7 @@ export default function Navbar() {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") close();
     };
-    const desktop = window.matchMedia("(min-width: 64rem)"); // Tailwind `lg`
+    const desktop = window.matchMedia("(min-width: 80rem)"); // Tailwind `xl`
     window.addEventListener("keydown", onKeyDown);
     desktop.addEventListener("change", close);
     return () => {
@@ -76,7 +93,7 @@ export default function Navbar() {
         <div className="flex items-center gap-10">
           <Link
             href="/"
-            aria-label="Welding Tech Corp home"
+            aria-label="Welding Technology Corp home"
             onClick={() => setMenuOpen(false)}
             className="relative block aspect-[400/103] h-8 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current lg:h-10"
           >
@@ -93,7 +110,7 @@ export default function Navbar() {
             />
             <Image
               src="/wtc-logo-black.png"
-              alt="Welding Technology Corp"
+              alt=""
               width={400}
               height={103}
               preload
@@ -103,7 +120,7 @@ export default function Navbar() {
             />
           </Link>
 
-          <ul className="hidden gap-6 text-sm font-medium lg:flex">
+          <ul className="hidden gap-6 text-sm font-medium xl:flex">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
                 <Link
@@ -118,8 +135,18 @@ export default function Navbar() {
           </ul>
         </div>
 
-        <div className="flex items-center gap-4">
-          {/* Next iteration: login, search, language */}
+        <div className="flex items-center gap-1">
+          <NavSearch open={searchOpen} onOpenChange={setSearchOpen} />
+          <AccountMenu
+            open={accountOpen}
+            onOpenChange={setAccountOpen}
+            className={hideOnPhoneWhileSearching}
+          />
+          <LanguageMenu
+            open={languageOpen}
+            onOpenChange={setLanguageOpen}
+            className={hideOnPhoneWhileSearching}
+          />
 
           <button
             type="button"
@@ -127,12 +154,12 @@ export default function Navbar() {
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
-            className="-mr-2 flex size-10 cursor-pointer items-center justify-center rounded-md focus-visible:outline-2 focus-visible:outline-current lg:hidden"
+            className="-mr-2 flex size-10 cursor-pointer items-center justify-center rounded-md focus-visible:outline-2 focus-visible:outline-current xl:hidden"
           >
             {menuOpen ? (
-              <CloseIcon className="size-6" />
+              <X className="size-6" aria-hidden />
             ) : (
-              <MenuIcon className="size-6" />
+              <Menu className="size-6" aria-hidden />
             )}
           </button>
         </div>
@@ -141,7 +168,7 @@ export default function Navbar() {
       <div
         id="mobile-menu"
         inert={!menuOpen}
-        className={`grid bg-white transition-[grid-template-rows,opacity] duration-300 lg:hidden ${
+        className={`grid bg-white transition-[grid-template-rows,opacity] duration-300 xl:hidden ${
           menuOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
         }`}
       >

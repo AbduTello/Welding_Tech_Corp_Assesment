@@ -1,8 +1,7 @@
 "use client";
 
+import { ArrowDown, Play, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-
-import { ArrowDownIcon, CloseIcon, PlayIcon } from "./icons";
 
 // Silent 720p loop for the background; full 1080p with audio only in the modal
 const BACKGROUND_SRC = "/hero-bg.mp4";
@@ -19,7 +18,7 @@ function PlayBadge({ className = "" }: { className?: string }) {
       className={`flex size-20 items-center justify-center rounded-full bg-white/20 text-white ring-1 ring-white/40 backdrop-blur-md ${className}`}
     >
       {/* Nudged right so the triangle looks optically centered */}
-      <PlayIcon className="ml-1 size-8" />
+      <Play className="ml-0.5 size-8" fill="currentColor" aria-hidden />
     </span>
   );
 }
@@ -136,7 +135,7 @@ export default function HeroVideo() {
           data-no-play-cursor
           className="absolute right-4 bottom-4 flex size-11 cursor-pointer items-center justify-center rounded-full text-white ring-1 ring-white/50 transition-colors hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:right-8 sm:bottom-8 sm:size-12"
         >
-          <ArrowDownIcon className="size-5" />
+          <ArrowDown className="size-5" aria-hidden />
         </button>
       </section>
 
@@ -147,7 +146,7 @@ export default function HeroVideo() {
         onClick={(e) => {
           if (e.target === dialogRef.current) dialogRef.current.close();
         }}
-        aria-label="Welding Tech Corp video"
+        aria-label="Welding Technology Corp video"
         className="m-auto max-h-none max-w-none overflow-visible bg-transparent p-0 backdrop:bg-black/85 backdrop:backdrop-blur-sm"
       >
         <div className="relative">
@@ -166,7 +165,7 @@ export default function HeroVideo() {
             aria-label="Close video"
             className="absolute -top-12 right-0 flex size-10 cursor-pointer items-center justify-center rounded-full bg-white/15 text-white transition hover:bg-white/30 focus-visible:outline-2 focus-visible:outline-white"
           >
-            <CloseIcon className="size-5" />
+            <X className="size-5" aria-hidden />
           </button>
         </div>
       </dialog>

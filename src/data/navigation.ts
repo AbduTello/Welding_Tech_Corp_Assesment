@@ -22,3 +22,8 @@ export const NAV_LINKS: NavLink[] = [
   { label: "News", href: "https://www.weldtechcorp.com/news/index.html" },
   { label: "Contact", href: "https://www.weldtechcorp.com/contact.html" },
 ];
+
+export const ACCOUNT_LINKS = {
+  signIn: "https://www.weldtechcorp.com/fileaccess/signin.php",
+  createAccount: "https://www.weldtechcorp.com/fileaccess/signup.php",
+};
