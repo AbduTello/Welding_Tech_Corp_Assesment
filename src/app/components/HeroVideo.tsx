@@ -41,6 +41,20 @@ export default function HeroVideo() {
     if (!section || !cursor) return;
     const rect = section.getBoundingClientRect();
     cursor.style.transform = `translate3d(${e.clientX - rect.left}px, ${e.clientY - rect.top}px, 0)`;
+    // Hide the play badge over other controls (e.g. the scroll arrow)
+    setHovering(!(e.target as Element).closest("[data-no-play-cursor]"));
+  }
+
+  function scrollPastHero() {
+    const section = sectionRef.current;
+    if (!section) return;
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    window.scrollTo({
+      top: section.getBoundingClientRect().bottom + window.scrollY,
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
   }
 
   function openModal() {
@@ -69,10 +83,7 @@ export default function HeroVideo() {
         // 16:9 box capped at the viewport height: the sides never crop (the
         // video has centered text), only top/bottom on ultra-wide screens
         className="relative aspect-video max-h-svh w-full overflow-hidden bg-black"
-        onPointerEnter={(e) => {
-          moveCursor(e);
-          setHovering(true);
-        }}
+        onPointerEnter={moveCursor}
         onPointerMove={moveCursor}
         onPointerLeave={() => {
           setHovering(false);
@@ -120,6 +131,27 @@ export default function HeroVideo() {
             <PlayIcon className="ml-1 size-8" />
           </div>
         </div>
+
+        <button
+          type="button"
+          onClick={scrollPastHero}
+          aria-label="Scroll down"
+          data-no-play-cursor
+          className="absolute right-4 bottom-4 flex size-11 cursor-pointer items-center justify-center rounded-full text-white ring-1 ring-white/50 transition-colors hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:right-8 sm:bottom-8 sm:size-12"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden
+            className="size-5"
+          >
+            <path d="M12 5v14M6 13l6 6 6-6" />
+          </svg>
+        </button>
       </section>
 
       <dialog
