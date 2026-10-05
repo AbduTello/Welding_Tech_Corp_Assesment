@@ -3,12 +3,7 @@
 import { ArrowDown, Play, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-import { asset } from "@/lib/asset";
-
-// Silent 720p loop for the background; full 1080p with audio only in the modal
-const BACKGROUND_SRC = asset("/hero-bg.mp4");
-const MODAL_SRC = asset("/hero-full.mp4");
-const POSTER_SRC = asset("/hero-poster.jpg");
+import { HERO_MEDIA } from "@/data/hero";
 
 function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -98,8 +93,8 @@ export default function HeroVideo() {
       >
         <video
           ref={backgroundRef}
-          src={BACKGROUND_SRC}
-          poster={POSTER_SRC}
+          src={HERO_MEDIA.background}
+          poster={HERO_MEDIA.poster}
           autoPlay
           muted
           loop
@@ -156,8 +151,8 @@ export default function HeroVideo() {
         <div className="relative">
           <video
             ref={modalVideoRef}
-            src={MODAL_SRC}
-            poster={POSTER_SRC}
+            src={HERO_MEDIA.full}
+            poster={HERO_MEDIA.poster}
             controls
             playsInline
             preload="none"

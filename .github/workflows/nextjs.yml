@@ -73,6 +73,8 @@ jobs:
         env:
           # next.config.ts switches to a static export under this subpath
           PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          # Full site URL for canonical links, share images, and the sitemap
+          NEXT_PUBLIC_SITE_URL: ${{ steps.pages.outputs.base_url }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

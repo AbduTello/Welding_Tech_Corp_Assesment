@@ -3,9 +3,18 @@ export const PHONE = {
   href: "tel:+12484773900",
 };
 
+export const FOUNDING_YEAR = 1936;
+
+const CITY = "Farmington Hills";
+const REGION = "MI";
+const POSTAL_CODE = "48335";
+
 export const ADDRESS = {
   street: "24775 Crestview Court",
-  locality: "Farmington Hills, MI 48335",
+  city: CITY,
+  region: REGION,
+  postalCode: POSTAL_CODE,
+  locality: `${CITY}, ${REGION} ${POSTAL_CODE}`,
   country: "USA",
   mapHref:
     "https://www.google.com/maps/search/?api=1&query=24775+Crestview+Court+Farmington+Hills+MI+48335",
