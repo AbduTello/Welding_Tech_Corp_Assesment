@@ -8,6 +8,7 @@ import {
   FOOTER_LINK_GROUPS,
   TERMS_HREF,
 } from "@/data/navigation";
+import { asset } from "@/lib/asset";
 
 const LINK =
   "rounded-sm decoration-brand decoration-2 underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
@@ -46,7 +47,7 @@ export default function Footer() {
         <div className="grid gap-12 lg:grid-cols-4 lg:gap-8">
           <div>
             <Image
-              src="/wtc-logo-white-transparent.png"
+              src={asset("/wtc-logo-white-transparent.png")}
               alt="Welding Technology Corp"
               width={400}
               height={103}

@@ -2,6 +2,7 @@ import { Phone } from "lucide-react";
 import Image from "next/image";
 
 import { PHONE } from "@/data/company";
+import { asset } from "@/lib/asset";
 
 import { BUTTON } from "@/components/ui/styles";
 
@@ -13,7 +14,7 @@ export default function ConsultationBand() {
     >
       {/* Decorative: a support agent beside WTC's weld software, from the original homepage */}
       <Image
-        src="/consultation-banner.jpg"
+        src={asset("/consultation-banner.jpg")}
         alt=""
         fill
         sizes="100vw"

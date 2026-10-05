@@ -3,10 +3,12 @@
 import { ArrowDown, Play, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
+import { asset } from "@/lib/asset";
+
 // Silent 720p loop for the background; full 1080p with audio only in the modal
-const BACKGROUND_SRC = "/hero-bg.mp4";
-const MODAL_SRC = "/hero-full.mp4";
-const POSTER_SRC = "/hero-poster.jpg";
+const BACKGROUND_SRC = asset("/hero-bg.mp4");
+const MODAL_SRC = asset("/hero-full.mp4");
+const POSTER_SRC = asset("/hero-poster.jpg");
 
 function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;

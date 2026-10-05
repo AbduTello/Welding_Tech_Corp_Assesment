@@ -8,6 +8,7 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 
 import { DEFAULT_LANGUAGE, LANGUAGES } from "@/data/languages";
 import { NAV_LINKS } from "@/data/navigation";
+import { asset } from "@/lib/asset";
 
 import AccountMenu, { AccountActions } from "./AccountMenu";
 import LanguageMenu from "./LanguageMenu";
@@ -109,7 +110,7 @@ export default function Navbar() {
           >
             {/* Both logos stay loaded and cross-fade, so there's no flash on swap */}
             <Image
-              src="/wtc-logo-white-transparent.png"
+              src={asset("/wtc-logo-white-transparent.png")}
               alt=""
               width={400}
               height={103}
@@ -119,7 +120,7 @@ export default function Navbar() {
               }`}
             />
             <Image
-              src="/wtc-logo-black.png"
+              src={asset("/wtc-logo-black.png")}
               alt=""
               width={400}
               height={103}

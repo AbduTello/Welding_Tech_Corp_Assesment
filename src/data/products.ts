@@ -1,3 +1,5 @@
+import { asset } from "@/lib/asset";
+
 export type ProductCategory = {
   title: string;
   description: string;
@@ -15,7 +17,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     cta: "Explore controls",
     href: "https://www.weldtechcorp.com/products/WTC-Series6000.html",
     image: {
-      src: "/control-cabinets.png",
+      src: asset("/control-cabinets.png"),
       alt: "WTC resistance welding control cabinets",
     },
   },
@@ -26,7 +28,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     cta: "Explore software",
     href: "https://www.weldtechcorp.com/products/adaptive-solutions.html",
     image: {
-      src: "/weld-data-charts.png",
+      src: asset("/weld-data-charts.png"),
       alt: "Weld data charts over a resistance spot weld",
     },
   },

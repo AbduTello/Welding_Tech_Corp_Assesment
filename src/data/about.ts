@@ -1,3 +1,5 @@
+import { asset } from "@/lib/asset";
+
 export type AboutStat = {
   value: string;
   label: string;
@@ -5,7 +7,7 @@ export type AboutStat = {
 
 // Copy and photo from weldtechcorp.com (homepage About block and about.html)
 export const HQ_PHOTO = {
-  src: "/wtc-headquarters.jpg",
+  src: asset("/wtc-headquarters.jpg"),
   alt: "Welding Technology Corp headquarters in Farmington Hills, Michigan",
   width: 1600,
   height: 935,

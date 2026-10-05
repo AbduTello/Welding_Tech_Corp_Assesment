@@ -1,3 +1,5 @@
+import { asset } from "@/lib/asset";
+
 export type Certificate = {
   pdf: string;
   // First page of the PDF rendered to an image — PDFs don't preview well in
@@ -21,8 +23,8 @@ export const CERTIFICATIONS: Certification[] = [
     code: "ISO 9001:2015",
     label: "Quality management systems",
     certificate: {
-      pdf: "/ISO-Certificate-July-28-2024-to-July-27-2027.pdf",
-      image: "/iso-9001-certificate.jpg",
+      pdf: asset("/ISO-Certificate-July-28-2024-to-July-27-2027.pdf"),
+      image: asset("/iso-9001-certificate.jpg"),
       imageWidth: 1236,
       imageHeight: 1600,
       issuer: "American Global Standards",
