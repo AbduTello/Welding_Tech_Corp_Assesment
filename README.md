@@ -38,7 +38,7 @@ I treated this like a client project and ran it in six milestones, each tracked 
 5. **Delivery:** deployed to GitHub Pages and wrote this README.
 6. **Polish:** final self-review.
 
-**Assumptions.** My clarifying questions weren't answered before the deadline, so I made these calls and kept them consistent:
+**Assumptions.** I made these calls and kept them consistent:
 
 - WTC's own logo, photos, video, and copy are reused, since this is a rebuild of their site.
 - The design stays faithful to the brand. Improvements happen within it, not as a redesign.
@@ -111,7 +111,7 @@ public/                 Images, videos, and the ISO certificate PDF
 
 ## What changed from the original site, and why
 
-**The carousel became sections.** The original homepage relies on a rotating slider. Carousels hide most of their content, rotate faster than people read, and are hard to use with a keyboard or screen reader. I mapped each slide's message to the audience it serves:
+**The carousel became sections.** The original homepage relies on a rotating slider. Carousels hide most of their content, rotate faster/slower than people read, and are hard to use with a keyboard or screen reader. I mapped each slide's message to the audience it serves:
 
 - **Buyers:** products, certifications.
 - **Existing customers:** service and support, WTC University, the My WTC portal.
@@ -121,7 +121,7 @@ Each one became its own section, so every message and link from the slider is st
 
 **The video stands on its own, with a real headline below it.** The hero keeps WTC's brand video as a muted background loop. Clicking it opens the full video with sound. The page headline (the only h1) is real text in a band below the video, not text burned into the footage, so search engines and screen readers can read it.
 
-**Nothing was dropped.** Every link from the old site's header and footer is in the new footer. That includes some that were easy to miss: Careers, Website Terms of Use, WTC University, My WTC sign-in and sign-up, and the ISO certificate. WTC publishes no email address, so the footer links to the contact page instead of inventing one.
+**Nothing was dropped.** Every link from the old site's header and footer is in the new footer. That includes some that were easy to miss: Careers, Website Terms of Use, WTC University, My WTC sign-in and sign-up, and the ISO certificate. 
 
 **Same brand, tighter system.** The brand red, navy, condensed headings (Oswald), and body font (Roboto) come from the original site. They are defined once as theme tokens. Section headings, buttons, and links share one set of styles, so sections stay consistent and a brand change is a single edit.
 
@@ -158,8 +158,6 @@ Both are skipped for anyone who prefers reduced motion, and both are hidden from
 - `robots.txt` and `sitemap.xml`.
 - Organization structured data (name, logo, phone, address, founding year, social profiles) for Google's company panel and local results.
 - Apple touch icon and a navy theme color for mobile browsers.
-
-**Privacy.** The HQ photo from WTC's site still carried the iPhone's GPS location in its metadata. I removed all metadata from it before publishing.
 
 **Deployment fix.** On GitHub Pages the site lives under `/Welding_Tech_Corp_Assesment/`. Next.js adds that prefix to its own files but not to plain image, video, and PDF paths, so those returned 404 on the first deploy. I fixed it in two places:
 
